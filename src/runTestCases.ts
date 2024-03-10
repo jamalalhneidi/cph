@@ -2,7 +2,6 @@ import * as vscode from 'vscode';
 import { checkUnsupported, randomId } from './utils';
 import { Problem } from './types';
 import { getProblem, saveProblem } from './parser';
-import { compileFile } from './compiler';
 import runAllAndSave from './webview/processRunAll';
 import path from 'path';
 import { getJudgeViewProvider } from './extension';
@@ -35,12 +34,6 @@ export default async () => {
         return;
     }
 
-    const didCompile = await compileFile(srcPath);
-
-    if (!didCompile) {
-        console.error('Could not compile', srcPath);
-        return;
-    }
     await editor.document.save();
     getJudgeViewProvider().focus();
     getJudgeViewProvider().extensionToJudgeViewMessage({
