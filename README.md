@@ -1,4 +1,4 @@
-# CPH (Cotato Edition)
+# CPH (Jamal's Edition)
 
 This a fork of [this repo](https://github.com/agrawal-d/cph) with some changes.
 
