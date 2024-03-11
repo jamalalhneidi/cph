@@ -134,7 +134,7 @@ export const ocWrite = (string: string) => {
 };
 
 export const ocShow = () => {
-    oc.show();
+    oc.show(true);
 };
 
 export const ocHide = () => {
