@@ -1,10 +1,10 @@
 {
-    "name": "competitive-programming-helper",
-    "displayName": "Competitive Programming Helper (cph)",
+    "name": "cph-cotato",
+    "displayName": "CPH (Cotato Edition)",
     "description": "Makes judging, compiling, and downloading problems for competitve programming easy. Also supports auto-submit for a few sites.",
     "license": "GPL-3.0-or-later",
     "icon": "icon.png",
-    "publisher": "DivyanshuAgrawal",
+    "publisher": "Jamal",
     "version": "6.1.0",
     "engines": {
         "vscode": "^1.52.0"
@@ -342,6 +342,6 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/agrawal-d/competitive-programming-helper/"
+        "url": "https://github.com/jamalalhneidi/cph"
     }
 }
