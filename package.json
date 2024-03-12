@@ -5,7 +5,7 @@
     "license": "GPL-3.0-or-later",
     "icon": "icon.png",
     "publisher": "jamal-alhneidi",
-    "version": "6.2.0",
+    "version": "6.2.1",
     "engines": {
         "vscode": "^1.52.0"
     },
