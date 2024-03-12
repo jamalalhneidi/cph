@@ -232,8 +232,12 @@ const handleNewProblem = async (problem: Problem) => {
                     `Template file does not exist: ${templateLocation}`,
                 );
             } else {
-                const templateContents =
+                let templateContents =
                     readFileSync(templateLocation).toString();
+                templateContents = expandPlaceholders(
+                    templateContents,
+                    problem,
+                );
                 writeFileSync(srcPath, templateContents);
             }
         }
@@ -244,4 +248,17 @@ const handleNewProblem = async (problem: Problem) => {
         command: 'new-problem',
         problem,
     });
+};
+
+const expandPlaceholders = (templateContents: string, problem: Problem) => {
+    Object.entries(placeholders).forEach(([placeholder, fn]) => {
+        templateContents = templateContents.replace(placeholder, fn(problem));
+    });
+    return templateContents;
+};
+
+const placeholders = {
+    '{{problemName}}': (problem: Problem) => problem.name,
+    '{{problemURL}}': (problem: Problem) => problem.url,
+    '{{time}}': () => new Date().toLocaleString(),
 };
