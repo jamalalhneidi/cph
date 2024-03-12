@@ -1,5 +1,18 @@
 # Changelog
 
+## 6.2.0
+
+-   Added support for placeholders. Details can be found
+    [here](docs/changes.md).
+
+## 6.1.2
+
+-   Fixed the output window's focus issue.
+
+## 6.1.1
+
+-   Fixed a bug that caused running and judging a solution to run slower.
+
 ## 5.9.2
 
 -   Minor UI improvments for small sidebar widths.
