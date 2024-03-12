@@ -1,6 +1,6 @@
 # Changelog
 
-## 6.2.0
+## 6.2.1
 
 -   Added support for placeholders. Details can be found
     [here](docs/changes.md).
