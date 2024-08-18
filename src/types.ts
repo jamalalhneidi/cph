@@ -33,6 +33,9 @@ export type prefSection =
     | 'language.python.Args'
     | 'language.python.SubmissionCompiler'
     | 'language.python.Command'
+    | 'language.ruby.Args'
+    | 'language.ruby.SubmissionCompiler'
+    | 'language.ruby.Command'
     | 'language.haskell.Args'
     | 'language.haskell.SubmissionCompiler'
     | 'language.haskell.Command'
@@ -49,6 +52,7 @@ export type Language = {
 
 export type LangNames =
     | 'python'
+    | 'ruby'
     | 'c'
     | 'cpp'
     | 'rust'
@@ -141,6 +145,11 @@ export type CreateLocalProblem = {
     command: 'create-local-problem';
 };
 
+export type OpenUrl = {
+    command: 'url';
+    url: string;
+};
+
 export type WebviewToVSEvent =
     | RunAllCommand
     | GetInitialProblem
@@ -151,7 +160,8 @@ export type WebviewToVSEvent =
     | DeleteTcsCommand
     | SubmitCf
     | OnlineJudgeEnv
-    | SubmitKattis;
+    | SubmitKattis
+    | OpenUrl;
 
 export type RunningCommand = {
     command: 'running';
@@ -192,6 +202,11 @@ export type NewProblemCommand = {
     problem: Problem | undefined;
 };
 
+export type RemoteMessageCommand = {
+    command: 'remote-message';
+    message: string;
+};
+
 export type VSToWebViewMessage =
     | ResultCommand
     | RunningCommand
@@ -201,6 +216,7 @@ export type VSToWebViewMessage =
     | WaitingForSubmitCommand
     | SubmitFinishedCommand
     | NotRunningCommand
+    | RemoteMessageCommand
     | NewProblemCommand;
 
 export type CphEmptyResponse = {
@@ -216,10 +232,11 @@ export type CphSubmitResponse = {
 };
 
 export type WebViewpersistenceState = {
-    ignoreSpaceWarning: boolean;
+    dialogCloseDate: number;
 };
 
 declare global {
     var reporter: TelemetryReporter;
     var context: vscode.ExtensionContext;
+    var remoteMessage: string | undefined;
 }

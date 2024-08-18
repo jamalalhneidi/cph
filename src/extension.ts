@@ -11,7 +11,6 @@ import JudgeViewProvider from './webview/JudgeView';
 import { getRetainWebviewContextPref } from './preferences';
 import TelemetryReporter from '@vscode/extension-telemetry';
 import config from './config';
-import telmetry from './telmetry';
 
 let judgeViewProvider: JudgeViewProvider;
 
@@ -67,14 +66,14 @@ const registerCommands = (context: vscode.ExtensionContext) => {
     context.subscriptions.push(disposable4);
     globalThis.reporter = new TelemetryReporter(config.telemetryKey);
     context.subscriptions.push(globalThis.reporter);
-
-    globalThis.reporter.sendTelemetryEvent(telmetry.EXTENSION_ACTIVATED);
 };
 
 // This method is called when the extension is activated
 export function activate(context: vscode.ExtensionContext) {
     console.log('cph: activate() execution started');
     globalThis.context = context;
+
+    downloadRemoteMessage();
 
     const statusBarItem = vscode.window.createStatusBarItem(
         vscode.StatusBarAlignment.Left,
@@ -108,4 +107,20 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     return;
+}
+
+async function downloadRemoteMessage() {
+    try {
+        console.log('Fetching remote message');
+        globalThis.remoteMessage = await (
+            await fetch(config.remoteMessageUrl)
+        ).text();
+        getJudgeViewProvider().extensionToJudgeViewMessage({
+            command: 'remote-message',
+            message: globalThis.remoteMessage,
+        });
+        console.log('Remote message fetched', globalThis.remoteMessage);
+    } catch (e) {
+        console.error('Error fetching remote message', e);
+    }
 }

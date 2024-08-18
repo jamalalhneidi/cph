@@ -15,12 +15,8 @@ export default function CaseView(props: {
 }) {
     const { id, result } = props.case;
 
-    const [input, setInput] = useState<string>(
-        props.case.testcase.input.trim(),
-    );
-    const [output, setOutput] = useState<string>(
-        props.case.testcase.output.trim(),
-    );
+    const [input, setInput] = useState<string>(props.case.testcase.input);
+    const [output, setOutput] = useState<string>(props.case.testcase.output);
     const [running, setRunning] = useState<boolean>(false);
     const [minimized, setMinimized] = useState<boolean>(
         props.case.result?.pass === true,
@@ -106,7 +102,7 @@ export default function CaseView(props: {
     if (result?.signal) {
         resultText = result?.signal;
     } else if (result?.stdout) {
-        resultText = result.stdout.trim() || ' ';
+        resultText = result.stdout || ' ';
     }
     if (!result) {
         resultText = 'Run to show output';
@@ -166,7 +162,7 @@ export default function CaseView(props: {
                         disabled={running}
                     >
                         <span className="icon">
-                            <i className="codicon codicon-debug-restart"></i>
+                            <i className="codicon codicon-play"></i>
                         </span>{' '}
                     </button>
                     <button

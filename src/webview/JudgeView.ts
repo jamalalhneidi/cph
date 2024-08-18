@@ -12,9 +12,6 @@ import {
     getRetainWebviewContextPref,
 } from '../preferences';
 import { setOnlineJudgeEnv } from '../compiler';
-import telmetry from '../telmetry';
-
-let initializedOnce = false;
 
 class JudgeViewProvider implements vscode.WebviewViewProvider {
     public static readonly viewType = 'cph.judgeView';
@@ -100,6 +97,11 @@ class JudgeViewProvider implements vscode.WebviewViewProvider {
                         break;
                     }
 
+                    case 'url': {
+                        vscode.env.openExternal(vscode.Uri.parse(message.url));
+                        break;
+                    }
+
                     default: {
                         console.error('Unknown event received from webview');
                     }
@@ -109,11 +111,6 @@ class JudgeViewProvider implements vscode.WebviewViewProvider {
     }
 
     private getInitialProblem() {
-        if (!initializedOnce) {
-            globalThis.reporter.sendTelemetryEvent(telmetry.USE_EXTENSION);
-        }
-
-        initializedOnce = true;
         const doc = vscode.window.activeTextEditor?.document;
         this.extensionToJudgeViewMessage({
             command: 'new-problem',
@@ -211,6 +208,10 @@ class JudgeViewProvider implements vscode.WebviewViewProvider {
             ),
         );
 
+        const remoteMessage = globalThis.remoteMessage
+            ? globalThis.remoteMessage.trim()
+            : ' ';
+
         const html = `
             <!DOCTYPE html lang="EN">
             <html>
@@ -231,6 +232,7 @@ class JudgeViewProvider implements vscode.WebviewViewProvider {
                         // Since the react script takes time to load, the problem is sent to the webview before it has even loaded.
                         // So, for the initial request, ask for it again.
                         window.vscodeApi = acquireVsCodeApi();
+                        window.remoteMessage = '${remoteMessage}';
                         document.addEventListener(
                             'DOMContentLoaded',
                             (event) => {
