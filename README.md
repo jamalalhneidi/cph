@@ -1,5 +1,9 @@
 # CPH (Jamal's Edition)
 
+> [!WARNING]
+> This repository is deprecated and no longer actively maintained.
+> Please use an alternative.
+
 This a fork of [this repo](https://github.com/agrawal-d/cph) with some changes.
 
 See changes [here](docs/changes.md).
